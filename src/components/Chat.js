@@ -2,6 +2,7 @@ import React from 'react'
 import ChatInput from './ChatInput'
 import styled from 'styled-components'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import ChatMessage from './ChatMessage'
 function Chat() {
     return (
       <Container>
@@ -18,10 +19,10 @@ function Chat() {
                
           </ChannelDetails>
         </Header>
-        <MessageContainer></MessageContainer>
-        <ChatInput>
-
-        </ChatInput>
+        <MessageContainer>
+            <ChatMessage/>
+        </MessageContainer>
+        <ChatInput/>
       </Container>
     );
 }
