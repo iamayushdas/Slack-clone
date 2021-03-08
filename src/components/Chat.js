@@ -1,14 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ChatInput from './ChatInput'
 import styled from 'styled-components'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import ChatMessage from './ChatMessage'
+import db from '../firebase'
+import { useParams } from 'react-router-dom'
+
 function Chat() {
+
+    let { channelId } = useParams();
+    const [ channel, setChannel ] = useState();
+
+    const getChannel = () => {
+        db.collection('rooms')
+        .doc(channelId)
+        .onSnapshot((snapshot)=>{
+            setChannel(snapshot.data());
+        })
+    }
+
+    useEffect(()=>{
+        getChannel();
+    }, [channelId])
+
     return (
+        
       <Container>
         <Header>
           <Channel>
-            <ChannelName># Ayushivani</ChannelName>
+            <ChannelName># { channel && channel.name } </ChannelName>
             <ChannelInfo>Company-wide announcements and work-based matters</ChannelInfo>
           </Channel>
           <ChannelDetails>
@@ -35,7 +55,7 @@ const Container = styled.div`
     grid-template-rows: 64px auto min-content;
 `
 const Channel = styled.div`
-
+    
 `
 const ChannelName = styled.div`
     font-weight: 700;
